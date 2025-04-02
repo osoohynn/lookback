@@ -1,1 +1,1 @@
-rootProject.name = "kotlin-jwt"
+rootProject.name = "lookback"
