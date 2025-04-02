@@ -15,6 +15,12 @@ class AiService (
             .uri("/analyze")
             .bodyValue(message)
             .retrieve()
+            .onStatus({ status -> status.isError }, { response ->
+                response.bodyToMono(String::class.java)
+                    .flatMap { errorBody ->
+                        Mono.error(RuntimeException("AI 서버 오류: $errorBody"))
+                    }
+            })
             .bodyToMono(AnalysisResponse::class.java)
     }
 }
